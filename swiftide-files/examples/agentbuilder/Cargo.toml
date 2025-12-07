@@ -1,0 +1,77 @@
+[package]
+name = "agent-builder"
+version = "0.1.0"
+edition = "2021"
+authors = ["Agent Builder Team"]
+description = "A GUI application for building and configuring AI agents with SSE endpoints"
+license = "MIT"
+
+[workspace]
+
+[dependencies]
+# GUI framework
+eframe = "0.33.0"
+egui = "0.33.0"
+
+# Async runtime
+tokio = { version = "1.46", features = ["full"] }
+swiftide = { path = "../../swiftide", version = "0.32.1", features = ["swiftide-agents"] }
+swiftide-agents = { path = "../../swiftide-agents", version = "0.32.1", features = ["mcp"] }
+swiftide-core = { path = "../../swiftide-core", version = "0.32.1" }
+swiftide-integrations = { path = "../../swiftide-integrations", version = "0.32.1", features = ["open-router", "ollama", "lmstudio", "tiktoken", "qdrant", "fastembed", "gemini", "groq"] }
+swiftide-indexing = { path = "../../swiftide-indexing", version = "0.32.1", optional = true }
+neo4rs = { version = "0.7", optional = true }
+async-openai = { version = ">=0.29.6" }
+
+rmcp = { version = "0.5", features = ["base64", "client", "macros", "server", "transport-async-rw", "transport-child-process", "reqwest", "schemars", "server-side-http", "tower", "transport-io", "transport-sse-client", "transport-sse-server", "transport-streamable-http-client", "transport-streamable-http-server", "transport-streamable-http-server-session", "transport-worker", "uuid"] }
+pdf-extract = { version = "0.10", optional = true }
+once_cell = { version = "1.19", optional = true }
+# Serialization
+serde = { version = "1.0", features = ["derive", "std"] }
+serde_json = { version = "1.0", features = ["std"] }
+
+# Error handling
+anyhow = "1.0"
+secrecy = "0.8"
+
+# Logging
+tracing = { version = "0.1", features = ["log", "attributes"] }
+tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
+
+# HTTP client for SSE validation
+reqwest = { version = "0.12" }
+
+# UUID generation
+uuid = { version = "1.18", features = ["v3", "v4", "serde"] }
+
+# Time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# Futures
+futures-util = { version = "0.3" }
+
+# Configuration
+dotenv = "0.15"
+
+# Additional dependencies from examples
+tokio-util = { version = "0.7" }
+tokio-stream = { version = "0.1.17" }
+futures = "0.3.31"
+
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "chrono", "uuid"] }
+
+# Web framework
+axum = "0.8"
+
+[[bin]]
+name = "agent-builder"
+path = "main.rs"
+
+[[bin]]
+name = "AgentRunner"
+path = "AgentRunner.rs"
+
+[features]
+default = ["eframe/default_fonts"]
+glow = ["eframe/glow"]
